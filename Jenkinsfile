@@ -9,7 +9,7 @@ pipeline {
         stage('Analizar con SonarQube') {
             steps {
                 withSonarQubeEnv('SonarLocal') {
-                    sh 'sonar-scanner'
+                    bat 'sonar-scanner'
                 }
             }
         }
