@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda de Componentes Electrónicos</title>
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="script.js"></script>
+</head>
+
+<body>
+    <header>
+        <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+        <h1>Tienda de Componentes Electrónicos</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="Inicio.html">Inicio</a></li>
+            <li><a href="Productos.html">Productos</a></li>
+            <li><a href="Categorias.html">Categorías</a></li>
+            <li><a href="Ofertas.html">Ofertas</a></li>
+            <li><a href="Contacto.html">Contacto</a></li>
+        </ul>
+    </nav>
+    <main>
+        <section class="categorias">
+            <h2>Categorías</h2>
+            <input type="text" id="busqueda" placeholder="Buscar producto..." onkeyup="buscarProductos()">
+            <button onclick="filtrarProductos('Resistencias')">Resistencias</button>
+            <button onclick="filtrarProductos('Capacitores')">Capacitores</button>
+            <button onclick="filtrarProductos('Microcontroladores')">Microcontroladores</button>
+            <button onclick="filtrarProductos('Diodos')">Diodos</button>
+            <button onclick="filtrarProductos('Transistores')">Transistores</button>
+            <button onclick="filtrarProductos('Todos')">Mostrar Todos</button>
+        </section>
+        <section id="productos"></section>
+    </main>
+    <footer>
+        <p>&copy; 2025 Tienda de Componentes Electrónicos</p>
+    </footer>
+    <script>
+    </script>
+</body>
+</html>

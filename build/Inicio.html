@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda de Componentes Electrónicos</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js"></script>
+</head>
+
+<body>
+    <header>
+        <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+        <h1>Tienda de Componentes Electrónicos</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="Inicio.html">Inicio</a></li>
+            <li><a href="Productos.html">Productos</a></li>
+            <li><a href="Categorias.html">Categorías</a></li>
+            <li><a href="Ofertas.html">Ofertas</a></li>
+            <li><a href="Contacto.html">Contacto</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section id="inicio" class="inicio">
+            <div class="inicio-contenido">
+                <h2>Bienvenido a la Tienda de Componentes Electrónicos</h2>
+                <p>Encuentra los mejores componentes electrónicos al mejor precio. Desde resistencias hasta microcontroladores, todo en un solo lugar.</p>
+                <a href="Productos.html" class="btn">Ver Productos</a>
+            </div>
+
+            <div class="carousel">
+                <button class="prev">&#10094;</button>
+                <div class="carousel-container">
+                    <img class="active" src="images/Diodo 1N4007.jpeg">
+                    <img src="images/Diodo Emisor de Luz Azul.jpeg">
+                    <img src="images/resistor 1k.jpeg">
+                    <img src="images/Diodo 1N4007.jpeg">
+                </div>
+                <button class="next">&#10095;</button>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Tienda de Componentes Electrónicos</p>
+    </footer>
+</body>
+
+</html>

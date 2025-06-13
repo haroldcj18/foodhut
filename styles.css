@@ -1,0 +1,317 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #f5f5f5;
+}
+
+header {
+    background-color: #333;
+    color: white;
+    padding: 1rem;
+    text-align: center;
+    width: 100%;
+    z-index: 1000;
+}
+
+nav {
+    display: flex;
+    position: fixed;
+    left: -250px;
+    top: 10%;
+    width: fit-content;
+    height: 100%;
+    background: #444;
+    padding-top: 60px;
+    transition: 0.3s;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+nav ul li {
+    padding: 10px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    display: block;
+}
+
+nav ul li a:hover {
+    background-color: #555;
+}
+
+.menu-toggle {
+    display: block;
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background: #222;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.menu-open nav {
+    left: 0;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 80px 20px 20px;
+    max-width: 1200px;
+    margin: auto;
+}
+
+section ul {
+    list-style: none;
+    padding: 0;
+}
+
+section ul li {
+    background: white;
+    margin: 10px auto;
+    padding: 15px;
+    max-width: 300px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.inicio {
+    text-align: center;
+    padding: 50px 20px;
+    background: #f4f4f4;
+    border-radius: 10px;
+    margin: 80px 20px 20px;
+}
+
+.inicio h2 {
+    font-size: 2rem;
+    color: #333;
+}
+
+.inicio p {
+    font-size: 1.2rem;
+    color: #555;
+}
+
+.btn {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 20px;
+    background: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.btn:hover {
+    background: #0056b3;
+}
+
+
+.prev, .next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 24px;
+    border-radius: 5px;
+}
+
+.prev {
+    left: 10px;
+}
+
+.next {
+    right: 10px;
+}
+
+.prev:hover, .next:hover {
+    background: rgba(0, 0, 0, 0.8);
+}
+
+.categorias {
+    width: fit-content;
+    background: #f8f8f8;
+    padding: 15px;
+    border-radius: 5px;
+    height: fit-content;
+}
+
+.categorias button {
+    display: block;
+    width: 100%;
+    margin: 5px 0;
+    padding: 10px;
+    background: #555;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.categorias button:hover {
+    background: #777;
+}
+
+#productos {
+    width: 75%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.producto {
+    margin: auto;
+    text-align: center;
+}
+
+.producto img {
+    height: 150px;
+    width: 150px;
+}
+
+.ofertas {
+    text-align: center;
+    padding: 50px 20px;
+    background: #f0f0f0;
+}
+
+.ofertas h2 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.ofertas p {
+    font-size: 1.2rem;
+    color: #666;
+}
+
+.contacto {
+    text-align: center;
+    padding: 50px 20px;
+}
+
+.contacto form {
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    margin: auto;
+}
+
+.contacto input,
+.contacto textarea {
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.contacto button {
+    padding: 10px;
+    background: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.contacto button:hover {
+    background: #218838;
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 1rem;
+    margin-top: auto;
+}
+
+@media (max-width: 768px) {
+    main {
+        flex-direction: column;
+    }
+
+    .categorias {
+        width: 100%;
+    }
+
+    #productos {
+        width: 100%;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+
+    .carousel {
+        max-width: 100%;
+    }
+
+    .contacto form {
+        width: 100%;
+    }
+}
+
+.carousel {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    overflow: hidden;
+    margin: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.carousel-container {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    width: 100%;
+}
+
+.carousel-container img {
+    width: 100%;
+    display: none;
+    border-radius: 10px;
+}
+
+.carousel-container img.active {
+    display: block;
+}
+
+.prev, .next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    font-size: 20px;
+    border-radius: 5px;
+}
+
+.prev { left: 10px; }
+.next { right: 10px; }
+
+.prev:hover, .next:hover {
+    background: rgba(0, 0, 0, 0.8);
+}
