@@ -32,17 +32,16 @@ pipeline {
                     currentBuild.result == null || currentBuild.result == 'SUCCESS'
                 }
             }
-        stage('Empaquetar proyecto') {
             steps {
                 bat '''
-                    if exist "C:\\Users\\Harold\\Downloads\\foodhut_empaquetado.zip" del "C:\\Users\\Harold\\Downloads\\foodhut_empaquetado.zip"
-                    powershell Compress-Archive -Path "C:\\Users\\Harold\\Downloads\\foodhut-master\\*" -DestinationPath "C:\\Users\\Harold\\Downloads\\foodhut_empaquetado.zip"
+                    mkdir build
+                    mkdir build\\paquete
+                    xcopy /E /I /Y src\\* build\\paquete\\
+                    powershell Compress-Archive -Path build\\paquete\\* -DestinationPath build\\foodhut.zip
                 '''
-            }
-   
                 echo 'Código empaquetado correctamente.'
-            
-             }
+            }
+        }
 
         stage('Confirmación de Empaquetado') {
             when {
@@ -55,7 +54,7 @@ pipeline {
                     subject: "📦 Proyecto empaquetado - Foodhut",
                     body: """El proyecto fue empaquetado correctamente.
 Ruta del archivo ZIP:
-${env.WORKSPACE}\\build\\codigo_produccion.zip"""
+${env.WORKSPACE}\\build\\foodhut.zip"""
             }
         }
     }
