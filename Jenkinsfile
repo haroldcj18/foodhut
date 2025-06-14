@@ -25,7 +25,22 @@ pipeline {
                 }
             }
         }
-
-       
+stage('Desplegar en Tomcat') {
+    steps {
+        echo 'Desplegando en Tomcat...'
+        bat '''
+            curl --upload-file build\\foodhut.war ^
+                 "http://tomcat:tomcat@localhost:8090/manager/text/deploy?path=/foodhut&update=true"
+        '''
+    }
+}
+        
+post {
+    always {
+        mail to: 'marycortes7766@gmail.com',
+            subject: "🚀 Proyecto desplegado - Foodhut",
+            body: "El proyecto ha sido desplegado correctamente en Tomcat: http://localhost:8090/foodhut"
+    }
+}       
             }
         }
