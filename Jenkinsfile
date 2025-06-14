@@ -24,8 +24,14 @@ pipeline {
                     }
                 }
             }
-        }
-        
+        } 
+post {
+    always {
+        mail to: 'marycortes7766@gmail.com',
+            subject: "🚀 Proyecto desplegado - Foodhut",
+            body: "El proyecto ha sido desplegado correctamente en Tomcat: http://localhost:8090/foodhut"
+    }
+}          
    
             }
         }
