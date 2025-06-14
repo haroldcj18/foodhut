@@ -10,37 +10,56 @@ pipeline {
             }
         }
 
-        stage('Notificar resultado del análisis') {
+        stage('Enviar notificación análisis exitoso') {
             steps {
-                script {
-                    if (currentBuild.result == null || currentBuild.result == 'SUCCESS') {
-                        mail to: 'marycortes7766@gmail.com',
-                            subject: "✅ Análisis exitoso - Foodhut",
-                            body: "El análisis de código con SonarQube finalizó correctamente."
-                    } else {
-                        mail to: 'marycortes7766@gmail.com',
-                            subject: "❌ Falló el análisis - Foodhut",
-                            body: "Revisa los resultados del análisis SonarQube en Jenkins."
-                    }
-                }
+                mail to: 'marycortes7766@gmail.com',
+                     subject: "✅ Análisis exitoso - Foodhut",
+                     body: "El análisis con SonarQube ha finalizado correctamente."
             }
         }
-stage('Desplegar en Tomcat') {
-    steps {
-        echo 'Desplegando en Tomcat...'
-        bat '''
-            curl --upload-file build\\foodhut.war ^
-                 "http://tomcat:tomcat@localhost:8090/manager/text/deploy?path=/foodhut&update=true"
-        '''
+
+        stage('Empaquetar proyecto') {
+            steps {
+                bat """
+                    mkdir "${env.WORKSPACE}\\build"
+                    powershell Compress-Archive -Path "C:\\Users\\Harold\\Downloads\\foodhut-master\\*" `
+                                                -DestinationPath "${env.WORKSPACE}\\build\\foodhut.war"
+                """
+                echo 'Código empaquetado correctamente.'
+            }
+        }
+
+        stage('Notificar empaquetado') {
+            steps {
+                mail to: 'marycortes7766@gmail.com',
+                     subject: "📦 Proyecto empaquetado - Foodhut",
+                     body: "El proyecto fue empaquetado exitosamente como WAR. Ruta: ${env.WORKSPACE}\\build\\foodhut.war"
+            }
+        }
+
+        stage('Desplegar en Tomcat') {
+            steps {
+                bat """
+                    copy /Y "${env.WORKSPACE}\\build\\foodhut.war" "C:\\ruta\\a\\tomcat\\webapps\\foodhut.war"
+                """
+                echo 'Despliegue realizado correctamente en Tomcat.'
+            }
+        }
+
+        stage('Notificar despliegue') {
+            steps {
+                mail to: 'marycortes7766@gmail.com',
+                     subject: "🚀 Proyecto desplegado - Foodhut",
+                     body: "El archivo WAR fue desplegado correctamente en Tomcat."
+            }
+        }
+    }
+
+    post {
+        failure {
+            mail to: 'marycortes7766@gmail.com',
+                 subject: "❌ Falló el pipeline - Foodhut",
+                 body: "Revisa Jenkins para más detalles del error."
+        }
     }
 }
-        
-post {
-    always {
-        mail to: 'marycortes7766@gmail.com',
-            subject: "🚀 Proyecto desplegado - Foodhut",
-            body: "El proyecto ha sido desplegado correctamente en Tomcat: http://localhost:8090/foodhut"
-    }
-}       
-            }
-        }
