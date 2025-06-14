@@ -14,12 +14,12 @@ pipeline {
     }
     post {
         success {
-            mail to: 'harold_cortes82172@elpoli.edu.co',
+            mail to: 'marycortes7766@gmail.com',
                 subject: "✅ Pipeline exitoso - Foodhut",
                 body: "La integración continua finalizó correctamente."
         }
         failure {
-            mail to: 'harold_cortes82172@elpoli.edu.co',
+            mail to: 'marycortes7766@gmail.com',
                 subject: "❌ Falló el pipeline - Foodhut",
                 body: "Revisa Jenkins para más detalles del error."
         }
