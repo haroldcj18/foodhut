@@ -32,15 +32,15 @@ pipeline {
                     currentBuild.result == null || currentBuild.result == 'SUCCESS'
                 }
             }
-            steps {
-                bat '''
-                    mkdir build
-                    mkdir build\\paquete
-                    xcopy /E /I /Y src\\* build\\paquete\\
-                    powershell Compress-Archive -Path build\\paquete\\* -DestinationPath build\\foodhut.zip
-                '''
-                echo 'Código empaquetado correctamente.'
-            }
+steps {
+    bat '''
+        if not exist build mkdir build
+        if exist build\\foodhut.zip del build\\foodhut.zip
+        powershell -Command "Compress-Archive -Path 'C:\\Users\\Harold\\Downloads\\foodhut-master\\*' -DestinationPath 'build\\foodhut.zip'"
+    '''
+    echo '✅ Proyecto empaquetado correctamente. Archivo ZIP ubicado en: build\\foodhut.zip'
+}
+
         }
 
         stage('Confirmación de Empaquetado') {
