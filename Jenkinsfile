@@ -18,16 +18,15 @@ pipeline {
             }
         }
 
-        stage('Empaquetar proyecto') {
-            steps {
-                bat """
-                    mkdir "${env.WORKSPACE}\\build"
-                    powershell Compress-Archive -Path "C:\\Users\\Harold\\Downloads\\foodhut-master\\*" `
-                                                -DestinationPath "${env.WORKSPACE}\\build\\foodhut.war"
-                """
-                echo 'Código empaquetado correctamente.'
-            }
-        }
+stage('Empaquetar proyecto') {
+    steps {
+        bat """
+            if not exist "build" mkdir build
+            powershell -Command "Compress-Archive -Path 'C:\\Users\\Harold\\Downloads\\foodhut-master\\*' -DestinationPath 'build\\foodhut.war'"
+        """
+        echo 'Código empaquetado correctamente.'
+    }
+}
 
         stage('Notificar empaquetado') {
             steps {
