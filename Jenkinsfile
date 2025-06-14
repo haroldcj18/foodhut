@@ -20,11 +20,11 @@ pipeline {
 
 stage('Empaquetar proyecto') {
     steps {
-        bat """
-            if not exist "build" mkdir build
-            powershell -Command "Compress-Archive -Path 'C:\\Users\\Harold\\Downloads\\foodhut-master\\*' -DestinationPath 'build\\foodhut.war'"
-        """
-        echo 'Código empaquetado correctamente.'
+        bat '''
+            if not exist "C:\\Users\\Harold\\AppData\\Local\\Jenkins\\.jenkins\\workspace\\foodhut_master\\build" mkdir "C:\\Users\\Harold\\AppData\\Local\\Jenkins\\.jenkins\\workspace\\foodhut_master\\build"
+            powershell -Command "Compress-Archive -Path 'C:\\Users\\Harold\\Downloads\\foodhut-master\\*' -DestinationPath 'C:\\Users\\Harold\\AppData\\Local\\Jenkins\\.jenkins\\workspace\\foodhut_master\\build\\foodhut.war'"
+        '''
+        echo '✅ Proyecto empaquetado correctamente.'
     }
 }
 
