@@ -1,18 +1,7 @@
 pipeline {
     agent any
 
-    environment {
-        GIT_URL = 'https://github.com/haroldcj18/foodhut.git'
-        RUTA_ZIP = 'build\\foodhut.zip'
-    }
-
     stages {
-        stage('Descargar código de GitHub') {
-            steps {
-                git url: "${env.GIT_URL}", branch: 'main'
-            }
-        }
-
         stage('Analizar con SonarQube') {
             steps {
                 withSonarQubeEnv('SonarLocal') {
@@ -21,36 +10,52 @@ pipeline {
             }
         }
 
-        stage('Empaquetar código para producción') {
+        stage('Notificar resultado del análisis') {
             steps {
-                bat '''
-                    rmdir /S /Q build 2>nul
-                    mkdir build\\paquete
-
-                    xcopy /E /I /Y * build\\paquete\\
-                    powershell Compress-Archive -Path build\\paquete\\* -DestinationPath build\\codigo_produccion.zip
-                '''
+                script {
+                    if (currentBuild.result == null || currentBuild.result == 'SUCCESS') {
+                        mail to: 'marycortes7766@gmail.com',
+                            subject: "✅ Análisis exitoso - Foodhut",
+                            body: "El análisis de código con SonarQube finalizó correctamente."
+                    } else {
+                        mail to: 'marycortes7766@gmail.com',
+                            subject: "❌ Falló el análisis - Foodhut",
+                            body: "Revisa los resultados del análisis SonarQube en Jenkins."
+                    }
+                }
             }
         }
-    }
 
-    post {
-        success {
-            mail to: 'marycortes7766@gmail.com',
-                subject: "✅ Pipeline exitoso - Foodhut",
-                body: """La integración continua finalizó correctamente.
-
-🔍 Análisis SonarQube: OK  
-📦 Proyecto empaquetado exitosamente.
-
-📁 Ruta del archivo ZIP:
-${env.WORKSPACE}\\${env.RUTA_ZIP}
-"""
+        stage('Empaquetar para Producción') {
+            when {
+                expression {
+                    currentBuild.result == null || currentBuild.result == 'SUCCESS'
+                }
+            }
+            steps {
+                bat '''
+                    mkdir build
+                    mkdir build\\paquete
+                    xcopy /E /I /Y "C:\\Users\\Harold\\Downloads\\foodhut-master\\*" build\\paquete\\
+                    powershell Compress-Archive -Path build\\paquete\\* -DestinationPath build\\foodhut.zip
+                '''
+                echo 'Código empaquetado correctamente.'
+            }
         }
-        failure {
-            mail to: 'marycortes7766@gmail.com',
-                subject: "❌ Falló el pipeline - Foodhut",
-                body: "El proceso falló. Revisa Jenkins para más detalles."
+
+        stage('Confirmación de Empaquetado') {
+            when {
+                expression {
+                    currentBuild.result == null || currentBuild.result == 'SUCCESS'
+                }
+            }
+            steps {
+                mail to: 'marycortes7766@gmail.com',
+                    subject: "📦 Proyecto empaquetado - Foodhut",
+                    body: """El proyecto fue empaquetado correctamente.
+Ruta del archivo ZIP:
+${env.WORKSPACE}\\build\\codigo_produccion.zip"""
+            }
         }
     }
 }
